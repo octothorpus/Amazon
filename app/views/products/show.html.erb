@@ -1,0 +1,48 @@
+<h1><%= @product.title %></h1>
+<p>
+  <%= @product.description %>
+</p>
+<p>
+  Price: $ <%= '%.2f' % @product.price %>
+</p>
+
+<p>
+  <%= @product.id %>
+</p>
+
+<hr>
+
+<% user_favourite = @product.favourite_for current_user %>
+  <% if user_favourite.present? %>
+    <%= link_to "Unfavourite", product_favourite_path(@product, user_favourite), method: :delete %>
+    <% else %>
+      <%= link_to "Favourite", product_favourites_path(@product), method: :post %>
+    <% end %>
+
+<hr>
+<br>
+
+<%= form_for [@product, @review] do |f| %>
+  <div>
+      <p>Star count: <%= f.text_field :star_count %></p>
+
+      <p>body: <%= f.text_area :body %></p>
+
+      <%= f.submit %>
+  </div>
+<% end %>
+
+<h3>Reviews</h3>
+
+<% @product.reviews.each do |r| %>
+  <p><%= r.star_count %></p>
+  <p><%= r.body %></p>
+  <% if @reviews.any? %>
+    <% if r.user_has_likes?(current_user) %>
+      <%= link_to "Unlike", review_like_path(r, r.like_for(current_user)), method: :delete %>
+    <% else %>
+      <%= link_to "Like", review_likes_path(r), method: :post %>
+    <% end %>
+
+  <% end %>
+<% end %>

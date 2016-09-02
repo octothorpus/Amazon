@@ -1,0 +1,3 @@
+<%= link_to "Vote Up", votes_path(@review, vote: {is_up: true} ), method: :post %>
+
+<%= link_to "Vote Down", votes_path(@review, vote: {is_up: false} ), method: :post %>

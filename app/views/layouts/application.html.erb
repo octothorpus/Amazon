@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+  <head>
+    <title>Amazon</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%#
+      link_to is a view helper method built-in with Rails
+      The first argument is the `anchor text`
+      The second argument is the `href` value
+     %>
+    <%= link_to("Home", root_path, {class: "abc"}) %>
+    <!-- <a href="<%= root_path %>">Home</a> -->
+    |
+    <%= link_to "About", about_path %>
+    <!-- <a href="/about">About</a> -->
+
+    <%= link_to "Contact", new_contact_path %>
+
+    <%= link_to "Products", products_path %>
+
+
+
+    <% if user_signed_in? %>
+    Welcome <%= current_user.full_name %>!!!!!
+    <%= link_to "Sign Out", sessions_path, method: :delete %>
+    <%= link_to "Favourites", user_path(current_user) %>
+    <% else %>
+    <%= link_to "Sign Up", new_user_path %>
+    <%= link_to "Sign In", new_session_path %>
+    <% end %>
+    <hr>
+    <div class="flash-message">
+      <% if flash[:notice] %>
+        <div class="alert alert-success alert-dismissable">
+          <%= flash[:notice] %>
+        </div>
+      <% elsif flash[:alert] %>
+        <div class="alert alert-danger alert-dismissable">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+    </div>
+    <%= yield %>
+  </body>
+</html>
